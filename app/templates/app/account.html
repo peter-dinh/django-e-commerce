@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "app/blocks/head.html" %}
+</head><!--/head-->
+
+<body>
+	<header id="header"><!--header-->
+		
+		{% include 'app/blocks/header-top.html' %}
+
+		
+	
+        {% include 'app/blocks/header-bottom.html' %}
+        {% include 'app/blocks/tool.html' %}
+		
+	</header><!--/header-->
+		
+		{% include 'app/blocks/message_flash.html' %}
+	<br />
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="left-sidebar">
+					
+						{% include "app/blocks/dongsanpham.html" %}
+					
+					</div>
+				</div>
+				
+				<div class="col-sm-9 padding-right">
+					<div class="features_items"><!--features_items-->
+                        <h2 class="title text-center">Thông tin tài khoản</h2>
+                        <div class="col-md-8 col-md-offset-2">
+                            <form action="{% url 'account' %}" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="user">Username:</label>
+                                    <input type="text" class="form-control" id="user" value="{{ khachhang.username }}" placeholder="Username" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Họ & tên:</label>
+                                    <input type="text" class="form-control" name="name" id="name" value="{{ khachhang.hovaten }}" placeholder="Họ & Tên">
+                                </div>
+                                <div class="form-group">
+                                    <label for="birthday">Sinh nhật: (YYYY-mm-dd)</label>
+                                    <input type="text" class="form-control" name="birthday" id="birthday" value="{{ khachhang.sinhnhat|date:"Y-m-d" }}" placeholder="Sinh nhật">
+                                </div>
+                                <div class="form-group">
+                                    <label for="sex">Giới tính:</label>
+                                    <select class="form-control" name="sex" id="sex">
+                                        <option {% if khachhang.gioitinh == 1 %} selected {% endif %} value="1" >Nam</option>
+                                        <option {% if khachhang.gioitinh == 0 %} selected {% endif %} value="0" >Nữ</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Số điện thoại:</label>
+                                    <input type="text" class="form-control" name="phone" id="phone" value="{{ khachhang.sodienthoai }}" placeholder="Số điện thoại">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email:</label>
+                                    <input type="text" class="form-control" name="email" id="email" value="{{ khachhang.email }}" placeholder="Email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Địa chỉ:</label>
+                                    <input type="text" class="form-control" name="address" id="address" value="{{ khachhang.diachi }}" placeholder="Địa chỉ">
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Cập nhật</button>
+                            </form>
+                        </div>
+					</div><!--features_items-->
+
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	{% include "app/blocks/footer.html" %}
+
+	{% include "app/blocks/js.html" %}
+</body>
+</html>

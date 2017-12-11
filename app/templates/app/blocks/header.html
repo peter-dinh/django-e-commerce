@@ -1,0 +1,21 @@
+{% if 'id_khachhang' not in request.session %}
+<header id="header"><!--header-->
+    
+    {% include 'app/blocks/header-top.html' %}
+
+    {% include 'app/blocks/header-mid.html' %}
+
+    {% include 'app/blocks/header-bottom.html' %}
+
+</header><!--/header-->
+{% else %}
+<header id="header"><!--header-->
+    
+    {% include 'app/blocks/header-top.html' %}
+
+    {% include 'app/blocks/header-bottom.html' %}
+    
+    {% include 'app/blocks/tool.html' %}
+    
+</header><!--/header-->
+{% endif %}

@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "app/blocks/head.html" %}
+</head><!--/head-->
+
+<body>
+	
+	{% include 'app/blocks/header.html' %}
+	{% include 'app/blocks/message_flash.html' %}
+
+	{% load carton_tags %}
+    {% get_cart as cart %}
+    
+    <section id="do_action">
+            <div class="container">
+                <div class="heading">
+                    <h3>Thông tin giỏ hàng</h3>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="chose_area">
+                            <div class="login-form" style="margin-left:30px;">
+                                <form>
+                                    <input type="text" name="username" value="{{ hoadon.user_khachhang_id.username }}" placeholder="Username" readonly />
+                                    <input type="text" name="phone" value="{{ hoadon.sodienthoai }}"  placeholder="Số điện thoại" readonly />
+                                    <input type="text" name="address" value="{{ hoadon.ghichu }}" placeholder="Địa chỉ" readonly />
+                                    <a href="/bill" class="btn btn-primary">Trở về</a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="total_area">
+                            <ul>
+                                <li>Giá giỏ hàng <span>{{ hoadon.tonggia }}</span></li>
+                                <li>Phí giao hàng <span>Miễn phí</span></li>
+                                <li>Tổng cộng <span>{{ hoadon.tonggia }}</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section><!--/#do_action-->
+
+	<section id="cart_items">
+		<div class="container">
+                <div class="table-responsive cart_info">
+                <table class="table table-condensed">
+                    <thead>
+                        <tr class="cart_menu">
+                            <td class="image">Sản phẩm</td>
+                            <td class="description"></td>
+                            <td class="price">Giá</td>
+                            <td class="quantity">Số lượng</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in hoadonchitiet %}
+                        <tr>
+                            <td class="cart_product">
+                                <a href=""><img src="/media/{{ item.masanphamtuychon_id.anhdaidien }}" height="80px" alt=""></a>
+                            </td>
+                            <td class="cart_description">
+                                <h4><a href="">{{ item.masanphamtuychon_id.ma_sp_id.tensp}}</a></h4>
+                                <p>Web ID: {{ item.masanphamtuychon_id.id }}</p>
+                            </td>
+                            <td class="cart_price">
+                                <p>{{ item.gia }}</p>
+                            </td>
+                            <td class="cart_quantity">
+                                <div class="cart_quantity_button">
+                                    <input class="cart_quantity_input" type="text" name="quantity" data-myval="{{ item.masanphamtuychon_id.id }}" id="quantity" readonly value="{{ item.soluong }}" autocomplete="off" size="2">
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+		</div>
+	</section> <!--/#cart_items-->
+
+	
+
+	{% include "app/blocks/footer.html" %}
+	
+	{% include "app/blocks/js.html" %}
+</body>
+</html>

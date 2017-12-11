@@ -12,6 +12,17 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -31,6 +42,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'carton',
     'app.apps.AppConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -38,7 +50,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
 ]
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -112,6 +127,8 @@ PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.BCryptPasswordHasher',
     'django.contrib.auth.hashers.SHA1PasswordHasher',
     'django.contrib.auth.hashers.MD5PasswordHasher',
+    'django.contrib.auth.hashers.UnsaltedSHA1PasswordHasher',
+    'django.contrib.auth.hashers.UnsaltedMD5PasswordHasher',
     'django.contrib.auth.hashers.CryptPasswordHasher',
 )
 
@@ -121,7 +138,7 @@ PASSWORD_HASHERS = (
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Krasnoyarsk'
 
 USE_I18N = True
 
@@ -138,3 +155,4 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+CART_PRODUCT_MODEL = 'app.models.sanphamtuychon'

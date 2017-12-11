@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "app/blocks/head.html" %}
+</head><!--/head-->
+
+<body>
+	<header id="header"><!--header-->
+		
+		{% include 'app/blocks/header-top.html' %}
+
+		
+	
+        {% include 'app/blocks/header-bottom.html' %}
+        {% include 'app/blocks/tool.html' %}
+		
+	</header><!--/header-->
+		
+		{% include 'app/blocks/message_flash.html' %}
+	<br />
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="left-sidebar">
+					
+						{% include "app/blocks/dongsanpham.html" %}
+						
+					
+					</div>
+				</div>
+				
+				<div class="col-sm-9 padding-right">
+					<div class="features_items"><!--features_items-->
+                        <h2 class="title text-center">Danh sách đơn hàng</h2>
+                        <div class="col-md-10 col-md-offset-1">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Trạng thái</th>
+                                    <th>Ngày lập</th>
+                                    <th>Tổng giá</th>
+								</tr>
+								{% for item in danhsachhoadon %}
+                                <tr>
+                                    <td><a href="/bill_info/{{item.id}}">{{ item.id }}</a></td>
+                                    <td>{% if item.trangthai == 0 %} <p style="color:red;">Đã hủy</p> {% endif %}{% if item.trangthai == 1 %} <p style="color:darkgreen;">Hoàn tất</p> {% endif %}{% if item.trangthai == 2 %} <p style="color:coral;">Đang xử lý</p> {% endif %}</td>
+                                    <td>{{ item.ngaylap }}</td>
+                                    <td>{{ item.tonggia }}</td>
+								</tr>
+								{% endfor %}
+                            </table>
+                        </div>
+					</div><!--features_items-->
+
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	{% include "app/blocks/footer.html" %}
+
+	{% include "app/blocks/js.html" %}
+</body>
+</html>

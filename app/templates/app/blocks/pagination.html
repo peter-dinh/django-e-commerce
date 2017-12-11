@@ -1,0 +1,22 @@
+<div style="clear:both">
+        <ul class="pagination">
+            {% if danhsach.has_previous %}
+            <li><a href="?page=1">&laquo; Đầu</a></li>
+            <li><a href="?page={{ danhsach.previous_page_number }}">Quay lại</a></li>
+            <li><a href="?page={{ danhsach.previous_page_number }}">{{ danhsach.number|add:"-1"  }}</a></li>
+            {% endif %}
+            <!-- <li><a href="">&raquo;</a></li>
+            <li class="active"><a href="">1</a></li>
+            <li><a href="">2</a></li>
+            <li><a href="">3</a></li>
+            <li><a href="">&raquo;</a></li> -->
+            <li class="active">
+                <a>{{ danhsach.number }}</a>
+            </li>
+            {% if danhsach.has_next %}
+            <li><a href="?page={{ danhsach.next_page_number }}">{{ danhsach.number|add:"1"  }}</a></li>
+            <li><a href="?page={{ danhsach.next_page_number }}">Tiếp theo</a></li>
+            <li><a href="?page={{ danhsach.paginator.num_pages }}">Cuối &raquo;</a></li>
+        {% endif %}
+        </ul>
+    </div>

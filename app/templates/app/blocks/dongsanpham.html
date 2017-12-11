@@ -1,0 +1,15 @@
+<div class="brands_products"><!--brands_products-->
+    <h2>Dòng sản phẩm</h2>
+    <div class="brands-name">
+        <ul class="nav nav-pills nav-stacked">
+            {% for item in catalog %}
+            <li><a href="{% url 'catalog' item.id %}"> <span class="pull-right"></span>{{ item.tendongsanpham }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div><!--/brands_products-->
+
+{% load static %}
+<div class="shipping text-center"><!--shipping-->
+    <img src="{% static 'images/home/shipping.jpg' %}" alt="" />
+</div><!--/shipping-->
