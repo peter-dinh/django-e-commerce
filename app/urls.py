@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from  . import views
-
+from django.views.defaults import page_not_found
 
 urlpatterns=[
     url(r'^$', views.index, name="index"),

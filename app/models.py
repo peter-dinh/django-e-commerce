@@ -129,7 +129,7 @@ class sanphamtuychon(models.Model):
         return (self.ma_sp.tensp + " | " + self.ma_tuy_chon.mausac).encode('utf8')
 
     @staticmethod   
-    def getlistdongsanphame(id_catalog):  
+    def getlistdongsanpham(id_catalog):  
         # create a cursor  
         cur = connection.cursor()  
         # execute the stored procedure passing in   
@@ -192,6 +192,7 @@ class sanphamtuychon(models.Model):
         results = cur.fetchall()
         cur.close()
         return results
+
     @staticmethod
     def  danhsachTimKiem(keyword):
         cur = connection.cursor()
@@ -199,7 +200,14 @@ class sanphamtuychon(models.Model):
         results = cur.fetchall()
         cur.close()
         return results
-
+    
+    @staticmethod
+    def Sanphamcungloai(id_catalog):
+        cur = connection.cursor()
+        cur.callproc('WSP_SanPhamCungLoai', [id_catalog])
+        results = cur.fetchall()
+        cur.close()
+        return results
 
     # @staticmethod
     # def laythongtinsanpham():

@@ -11,6 +11,21 @@ from django.contrib.auth.hashers import make_password
 from carton.cart import Cart
 
 from .models import *
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+
+
+def handler404(request):
+    response = render_to_response('app/404.html', {},context_instance=RequestContext(request))
+    response.status_code = 404
+    return response
+
+def myView(request, param):
+    if not param:
+        raise Http404
+    return render_to_response('app/404.html')
+
+
 
 def index(request):
     # viet bang stored
@@ -205,16 +220,20 @@ def info(request, id_sanphamtuychon):
     get_sanpham.dongsp_catalog_id = get_dongsanpham
     get_sanphamtuychon.ma_sp_id = get_sanpham
     get_sanphamtuychon.ma_tuy_chon_id = get_tuychon
-    
+
+    get_sanphamcungloai = sanphamtuychon.Sanphamcungloai(get_sanphamtuychon.ma_sp_id.dongsp_catalog_id.id)
+   
     
 
     return render(request, 'app/product-details.html',{
         'catalog': catalog,
         'sanpham': get_sanphamtuychon,
+        'danhsachcungloai1': get_sanphamcungloai[0:3],
+        'danhsachcungloai2': get_sanphamcungloai[3:6],
     })
 
 def catalog(request, id_catalog):
-    danhsachsanpham = sanphamtuychon.getlistdongsanphame(id_catalog)
+    danhsachsanpham = sanphamtuychon.getlistdongsanpham(id_catalog)
     catalog = dongsanpham.getlist() 
 
     paginator = Paginator(danhsachsanpham, 15)
@@ -234,8 +253,12 @@ def catalog(request, id_catalog):
     })
 
 def search(request):
-    catalog = dongsanpham.getlist()  
-    danhsachtimkiem = sanphamtuychon.danhsachTimKiem(request.POST.get("r"))
+    catalog = dongsanpham.getlist() 
+    if request.method == "POST": 
+        request.session['r'] = request.POST.get("r")
+    
+    keyword = request.session['r']
+    danhsachtimkiem = sanphamtuychon.danhsachTimKiem(keyword)
     paginator = Paginator(danhsachtimkiem, 15)
 
     page = request.GET.get('page')
@@ -338,7 +361,6 @@ def bill_info(request, id_bill):
             'hoadon': get_hoadon,
             'hoadonchitiet': get_hoadonchitiet,
         })
-
 
 def submit(request):
     if 'id_khachhang' not in request.session:
