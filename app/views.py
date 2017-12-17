@@ -69,7 +69,9 @@ def login(request):
 def logout(request):
     if 'id_khachhang' in request.session: 
         del request.session['id_khachhang']
-        
+    else:
+        messages.warning(request, message='You must signin in system', extra_tags='alert')
+        return redirect('/')
     return redirect('/')
 
 def register(request):
@@ -83,26 +85,26 @@ def register(request):
         passsword = make_password(request.POST.get('r_pass'), None, 'unsalted_md5')
         
         if username == "":
-            messages.success(request, message="Username khong duoc de trong!", extra_tags='alert')
+            messages.warning(request, message="Username không được để trống!", extra_tags='alert')
             return redirect('/login')
 
         if passsword == "":
-            messages.success(request, message="Password khong duoc de trong!", extra_tags='alert')
+            messages.warning(request, message="Password không được để trống!", extra_tags='alert')
             return redirect('/login')
 
         if email == "":
-            messages.success(request, message="Email khong duoc de trong", extra_tags='alert')
+            messages.warning(request, message="Email không được để trốngg", extra_tags='alert')
             return redirect('/login')
 
         try:
             taikhoan.objects.get(username=username)
-            messages.success(request, message="Username da ton tai!", extra_tags='alert')
+            messages.warning(request, message="Username đã tồn tạii!", extra_tags='alert')
             return redirect('/login')
         except:
             pass
         try:
             taikhoan.objects.get(email=email)
-            messages.success(request, message="Email da ton tai", extra_tags='alert')
+            messages.warning(request, message="Email da ton tai", extra_tags='alert')
             return redirect('/login')
         except:
             pass
@@ -256,8 +258,11 @@ def search(request):
     catalog = dongsanpham.getlist() 
     if request.method == "POST": 
         request.session['r'] = request.POST.get("r")
-    
-    keyword = request.session['r']
+    try:
+        keyword = request.session['r']
+    except:
+        messages.warning(request, message='Bạn chưa nhập từ khóa', extra_tags='alert')
+        return redirect('/')
     danhsachtimkiem = sanphamtuychon.danhsachTimKiem(keyword)
     paginator = Paginator(danhsachtimkiem, 15)
 

@@ -10,6 +10,7 @@ from .models import sanpham, sanphamtuychon, tuychon, ketnoi, kho, thongsocamera
 
 class taikhoanAdmin(admin.ModelAdmin):
     list_display  = ('username', 'hovaten', 'gioitinh', 'sodienthoai', 'email')
+    readonly_fields = ['password']
     search_fields = ('username', 'hovaten', 'gioitinh', 'sodienthoai', 'loaitaikhoan', 'email' )
 
 class sanphamtuychonAdmin(admin.ModelAdmin):
