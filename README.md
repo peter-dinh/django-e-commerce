@@ -1,2 +1,1 @@
-mysite
-python manage.py runserver --insecure
+Fork from [GroupJava/app](https://github.com/Group-Java/app)
